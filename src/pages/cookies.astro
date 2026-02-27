@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+<BaseLayout title="Política de Cookies | Projekt" description="Política de cookies com consentimento para itens opcionais." path="/cookies">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Cookies'}]} />
+    <h1>Política de Cookies</h1>
+    <p>Utilizamos cookies essenciais para funcionamento do site (ex.: preferência de tema e consentimento). Cookies analíticos só são ativados após consentimento.</p>
+    <ul>
+      <li><strong>Essenciais:</strong> necessários para funcionalidades básicas.</li>
+      <li><strong>Analíticos (opcional):</strong> [PREENCHER caso GA4 seja ativado].</li>
+    </ul>
+    <p>Você pode revisar suas escolhas removendo o armazenamento local do navegador.</p>
+  </section>
+</BaseLayout>

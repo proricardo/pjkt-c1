@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { services } from '../data/site';
+---
+<BaseLayout title="Serviços | Projekt" description="Categorias de serviços da Projekt em tecnologia, IA e consultoria." path="/servicos">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Serviços'}]} />
+    <h1>Serviços</h1>
+    <p class="muted">Atuação modular para apoiar estratégia, execução e evolução contínua.</p>
+    <div class="grid grid-2">
+      {services.map((s, i) => (
+        <details class="card" style="padding:1rem;" open={i===0}>
+          <summary><strong>{s.title}</strong></summary>
+          <p><strong>Subserviços:</strong></p>
+          <ul>{s.items.map((it) => <li>{it}</li>)}</ul>
+          <p><strong>Entregáveis típicos:</strong></p>
+          <ul>{s.deliverables.map((d) => <li>{d}</li>)}</ul>
+        </details>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

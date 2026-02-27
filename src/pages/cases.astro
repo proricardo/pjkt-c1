@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { cases } from '../data/site';
+---
+<BaseLayout title="Cases | Projekt" description="Modelos de case para preenchimento com contexto, desafio, abordagem e resultado." path="/cases">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Cases'}]} />
+    <h1>Cases</h1>
+    <p class="muted">Conteúdo abaixo é exemplo/modelo para preenchimento até inserção dos dados reais.</p>
+    <div class="grid grid-2">
+      {cases.map((item, index) => <article class="card" style="padding:1rem;"><h2 style="font-size:1.1rem;">Case modelo {index + 1}</h2><p>{item}</p></article>)}
+    </div>
+  </section>
+</BaseLayout>

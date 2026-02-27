@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = '/' } = Astro.props;
+const canonical = new URL(path, Astro.site);
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Projekt',
+  url: 'https://projekt.com.br',
+  sameAs: ['[PREENCHER_LINKEDIN]', '[PREENCHER_GITHUB]'],
+  areaServed: 'Brasil',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Curitiba',
+    addressRegion: 'PR',
+    addressCountry: 'BR'
+  }
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta property="og:site_name" content="Projekt" />
+    <meta property="og:image" content="/images/og-cover.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/images/og-cover.svg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)}></script>
+    <script is:inline>
+      const preferred = localStorage.getItem('projekt-theme');
+      const darkPreferred = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = preferred ?? (darkPreferred ? 'dark' : 'light');
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container inner">
+        <a class="logo" href="/">PROJ<span>EKT</span></a>
+        <nav aria-label="Navegação principal">
+          <ul>
+            <li><a href="/servicos">Serviços</a></li>
+            <li><a href="/cases">Cases</a></li>
+            <li><a href="/metodologia">Metodologia</a></li>
+            <li><a href="/sobre">Sobre</a></li>
+            <li><a href="/insights">Insights</a></li>
+            <li><a href="/contato">Contato</a></li>
+          </ul>
+        </nav>
+        <button id="themeToggle" class="btn" aria-label="Alternar tema">🌗</button>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="container grid grid-3">
+        <div>
+          <strong>Projekt</strong>
+          <p class="muted">Inovação aplicada em tecnologia e IA para empresas em crescimento.</p>
+        </div>
+        <div>
+          <strong>Atendimento</strong>
+          <p class="muted">Curitiba/PR + RMC<br/>Remoto para todo o Brasil</p>
+        </div>
+        <div>
+          <strong>Links</strong>
+          <p><a href="/privacidade">Privacidade</a> · <a href="/cookies">Cookies</a><br/><a href="[PREENCHER_LINKEDIN]">LinkedIn</a> · <a href="[PREENCHER_GITHUB]">GitHub</a></p>
+        </div>
+      </div>
+    </footer>
+    <div class="cookie-banner card" id="cookieBanner" role="dialog" aria-live="polite">
+      <p>Usamos apenas cookies essenciais por padrão. Você pode permitir cookies analíticos opcionais.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+        <button class="btn" id="cookieReject">Somente essenciais</button>
+        <button class="btn primary" id="cookieAccept">Aceitar analíticos</button>
+      </div>
+    </div>
+    <script is:inline>
+      const toggle = document.getElementById('themeToggle');
+      toggle?.addEventListener('click', () => {
+        const current = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = current;
+        localStorage.setItem('projekt-theme', current);
+      });
+      const consent = localStorage.getItem('projekt-cookie-consent');
+      const banner = document.getElementById('cookieBanner');
+      if (!consent && banner) banner.classList.add('show');
+      document.getElementById('cookieAccept')?.addEventListener('click', () => {
+        localStorage.setItem('projekt-cookie-consent', 'analytics');
+        banner?.classList.remove('show');
+      });
+      document.getElementById('cookieReject')?.addEventListener('click', () => {
+        localStorage.setItem('projekt-cookie-consent', 'essential');
+        banner?.classList.remove('show');
+      });
+    </script>
+  </body>
+</html>

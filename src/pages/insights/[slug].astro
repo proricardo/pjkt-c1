@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+<BaseLayout title={`${post.data.title} | Projekt Insights`} description={post.data.description} path={`/insights/${post.slug}`}>
+  <article class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Insights',href:'/insights'},{label:post.data.title}]} />
+    <h1>{post.data.title}</h1>
+    <p class="muted">{post.data.pubDate.toLocaleDateString('pt-BR')} · {post.data.tags.join(' · ')}</p>
+    <div class="card" style="padding:1.5rem; margin-top:1rem;">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
