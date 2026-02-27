@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { services, cases, testimonials, portfolio } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const insights = (await getCollection('insights')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
+---
+<BaseLayout title="Projekt | Inovação aplicada em tecnologia e IA" description="Projetos de tecnologia, IA e consultoria para decisões técnicas com foco em valor de negócio." path="/">
+  <section class="hero container">
+    <span class="tag">Tecnologia + IA para decisões com impacto real</span>
+    <h1>Transformamos complexidade técnica em vantagem competitiva.</h1>
+    <p class="muted">A Projekt apoia empresas em Curitiba e no Brasil remoto com projetos de tecnologia, IA e consultoria estratégica orientada a valor.</p>
+    <div style="display:flex; gap:.7rem; flex-wrap:wrap; margin-top:1rem;">
+      <a class="btn primary" href="/contato">Falar com a Projekt</a>
+      <a class="btn" href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>O que fazemos</h2>
+    <div class="grid grid-2">
+      {services.map((service) => <article class="card" style="padding:1.2rem;"><h3>{service.title}</h3><p class="muted">{service.items[0]}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Como geramos valor</h2>
+    <ul>
+      <li>Priorização técnica conectada a metas de negócio.</li>
+      <li>Redução de risco em decisões de arquitetura e IA.</li>
+      <li>Aceleração do ciclo discovery → entrega com governança.</li>
+      <li>Apoio executivo para comunicação técnica com clareza.</li>
+    </ul>
+  </section>
+
+  <section class="section container">
+    <h2>Metodologia PROJEKT LOOP</h2>
+    <p class="muted">Um ciclo contínuo com discovery, roadmap, arquitetura, entrega assistida, governança e melhoria contínua.</p>
+    <a class="btn" href="/metodologia">Ver metodologia completa</a>
+  </section>
+
+  <section class="section container">
+    <h2>Cases em destaque</h2>
+    <div class="grid grid-2">
+      {cases.slice(0, 2).map((item) => <article class="card" style="padding:1rem;">{item}</article>)}
+    </div>
+  </section>
+
+  <section class="section container">
+    <h2>Depoimentos</h2>
+    <article class="card" style="padding:1.2rem; min-height:120px;" id="testimonial">{testimonials[0]}</article>
+  </section>
+
+  <section class="section container">
+    <h2>Portfólio técnico</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem;">{portfolio.map((tech) => <span class="btn">{tech}</span>)}</div>
+  </section>
+
+  <section class="section container">
+    <h2>Insights</h2>
+    <div class="grid grid-3">
+      {insights.map((post) => (
+        <article class="card" style="padding:1rem;">
+          <h3>{post.data.title}</h3>
+          <p class="muted">{post.data.description}</p>
+          <a class="btn" href={`/insights/${post.slug}`}>Ler</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container card" style="padding:1.5rem;">
+    <h2>Vamos conversar sobre seu cenário?</h2>
+    <p class="muted">Compartilhe contexto, objetivos e restrições. Retornamos com próximos passos sugeridos.</p>
+    <a class="btn primary" href="/contato">Abrir formulário de contato</a>
+  </section>
+
+  <script define:vars={{ testimonials }}>
+    const el = document.getElementById('testimonial');
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % testimonials.length;
+      if (el) el.textContent = testimonials[idx];
+    }, 3800);
+  </script>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const hasEndpoint = Boolean(endpoint);
+---
+<BaseLayout title="Contato | Projekt" description="Entre em contato com a Projekt via formulário, WhatsApp ou e-mail." path="/contato">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Contato'}]} />
+    <h1>Contato</h1>
+    <p class="muted">CTA principal: formulário. Também atendemos via WhatsApp e e-mail.</p>
+    <div class="grid grid-2">
+      <form id="contactForm" class="card" style="padding:1.2rem;" data-endpoint={endpoint}>
+        <div class="grid">
+          <div><label for="nome">Nome</label><input class="input" id="nome" name="nome" required /></div>
+          <div><label for="email">E-mail</label><input class="input" id="email" name="email" type="email" required /></div>
+          <div><label for="empresa">Empresa</label><input class="input" id="empresa" name="empresa" /></div>
+          <div><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" required></textarea></div>
+          <input class="sr-only" tabindex="-1" autocomplete="off" name="website" />
+          <button class="btn primary" type="submit">Enviar</button>
+          <p id="formStatus" class="muted"></p>
+          {!hasEndpoint && <p><strong>Aviso:</strong> endpoint de formulário não configurado. Usaremos fallback por e-mail.</p>}
+        </div>
+      </form>
+      <aside class="card" style="padding:1.2rem;">
+        <h2 style="font-size:1.2rem;">Canais diretos</h2>
+        <p>WhatsApp: <a href="https://wa.me/5500000000000">+55 [PREENCHER]</a></p>
+        <p>E-mail: <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a></p>
+        <p>LinkedIn: <a href="[PREENCHER_LINKEDIN]">[PREENCHER_LINKEDIN]</a></p>
+      </aside>
+    </div>
+  </section>
+  <script>
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      if (fd.get('website')) return;
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        const nome = encodeURIComponent(String(fd.get('nome') || ''));
+        const email = encodeURIComponent(String(fd.get('email') || ''));
+        const msg = encodeURIComponent(String(fd.get('mensagem') || ''));
+        location.href = `mailto:contato@projekt.com.br?subject=Contato%20site%20Projekt%20-%20${nome}&body=Email:%20${email}%0A%0A${msg}`;
+        return;
+      }
+      status.textContent = 'Enviando...';
+      const payload = Object.fromEntries(fd.entries());
+      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      status.textContent = res.ok ? 'Mensagem enviada com sucesso.' : 'Não foi possível enviar agora. Tente WhatsApp ou e-mail.';
+      if (res.ok) form.reset();
+    });
+  </script>
+</BaseLayout>
