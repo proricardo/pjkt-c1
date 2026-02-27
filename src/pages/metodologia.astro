@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const etapas = [
+  ['1. Discovery orientado a contexto', 'Mapeamento de objetivos, restrições e stakeholders. Artefatos: diagnóstico e hipóteses de valor.'],
+  ['2. Roadmap de decisão', 'Priorização incremental com impacto técnico + negócio. Artefato: roadmap trimestral.'],
+  ['3. Arquitetura e desenho de solução', 'Definição de opções arquiteturais, risco e trade-offs. Artefato: blueprint.'],
+  ['4. Delivery assistido', 'Acompanhamento da execução com checkpoints e qualidade. Artefatos: plano de sprint e indicadores.'],
+  ['5. Governança operacional', 'Cadência de acompanhamento executivo e técnico. Artefato: painel de governança.'],
+  ['6. Melhoria contínua', 'Avaliação de resultados e próximos ciclos. Artefato: backlog estratégico vivo.']
+];
+---
+<BaseLayout title="Metodologia PROJEKT LOOP | Projekt" description="Metodologia proprietária em seis etapas para entregar valor com tecnologia e IA." path="/metodologia">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Metodologia'}]} />
+    <h1>PROJEKT LOOP</h1>
+    <ul class="timeline" style="list-style:none; padding:0;">
+      {etapas.map(([title, text]) => <li><h2 style="font-size:1.15rem;">{title}</h2><p class="muted">{text}</p></li>)}
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+<BaseLayout title="Sobre | Projekt" description="Perfil institucional da Projekt e espaço para credenciais do fundador." path="/sobre">
+  <section class="section container">
+    <Breadcrumb items={[{label:'Home',href:'/'},{label:'Sobre'}]} />
+    <h1>Sobre a Projekt</h1>
+    <p>A Projekt nasceu para apoiar empresas que precisam evoluir tecnologia com clareza de decisão, governança e foco em resultado.</p>
+    <article class="card" style="padding:1.2rem; margin-top:1rem;">
+      <h2 style="font-size:1.2rem;">Perfil do fundador(a)</h2>
+      <p>[PREENCHER] Formação · [PREENCHER] Especialidades · [PREENCHER] Experiências relevantes.</p>
+      <p>LinkedIn: <a href="[PREENCHER_LINKEDIN_FUNDADOR]">[PREENCHER_LINKEDIN_FUNDADOR]</a></p>
+    </article>
+  </section>
+</BaseLayout>

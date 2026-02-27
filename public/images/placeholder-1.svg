@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Placeholder abstrato Projekt 1">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1226"/>
+      <stop offset="100%" stop-color="#14274a"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g filter="url(#blur)"><circle cx="73" cy="51" r="131" fill="hsla(207,85%,60%,0.08)" /><circle cx="200" cy="148" r="162" fill="hsla(230,85%,60%,0.15)" /><circle cx="327" cy="245" r="193" fill="hsla(253,85%,60%,0.12)" /><circle cx="454" cy="342" r="224" fill="hsla(196,85%,60%,0.09)" /><circle cx="581" cy="439" r="255" fill="hsla(219,85%,60%,0.16)" /><circle cx="708" cy="536" r="286" fill="hsla(242,85%,60%,0.13)" /><circle cx="835" cy="633" r="317" fill="hsla(265,85%,60%,0.10)" /><circle cx="962" cy="730" r="128" fill="hsla(208,85%,60%,0.17)" /><circle cx="1089" cy="827" r="159" fill="hsla(231,85%,60%,0.14)" /><circle cx="1216" cy="24" r="190" fill="hsla(254,85%,60%,0.11)" /><circle cx="1343" cy="121" r="221" fill="hsla(197,85%,60%,0.08)" /><circle cx="1470" cy="218" r="252" fill="hsla(220,85%,60%,0.15)" /></g>
+  <g>
+    <rect x="120" y="120" width="1360" height="660" rx="28" fill="none" stroke="rgba(130,180,255,.28)"/>
+  </g>
+</svg>
