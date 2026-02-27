@@ -21,9 +21,17 @@ npm run build
 Saída em `dist/` (compatível com GitHub Pages).
 
 ## Deploy no GitHub Pages
+### Opção A (recomendada): GitHub Actions
 1. Suba o repositório no GitHub.
 2. Em **Settings → Pages**, configure Source como **GitHub Actions**.
 3. O workflow `.github/workflows/deploy-pages.yml` fará build/deploy automaticamente em pushes na branch `main`.
+
+### Opção B (sem Actions): branch + pasta `docs/`
+1. Rode localmente: `npm run build:docs`.
+2. Faça commit da pasta `docs/` (inclui `docs/index.html`).
+3. Em **Settings → Pages**, configure Source como **Deploy from a branch** e pasta `/docs`.
+
+> Também foi adicionado `index.html` na raiz com redirecionamento para `./docs/` como fallback.
 
 ## Formulário (Formspree/StaticForms)
 - Defina o secret do repositório: `PUBLIC_FORM_ENDPOINT`.
